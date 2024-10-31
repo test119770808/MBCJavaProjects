@@ -88,6 +88,10 @@ public class CalculatorEx1 {
 		int num1 = scan.nextInt();
 		System.out.print("두번째 정수 입력 : ");
 		int num2 = scan.nextInt();
+		if (num2 == 0) {
+			System.out.println("0으로 나눌 수 없습니다.");
+			return;
+		}
 		System.out.println("더하기 결과 : "+ (int)((num1 / (double)num2) * 100)/(double)100);
 		
 	}
