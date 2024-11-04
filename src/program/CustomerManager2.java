@@ -60,10 +60,20 @@ public class CustomerManager2 {
 				case 'u':
 				case 'ㅕ':
 					System.out.println("데이터를 수정합니다.");
+					if(count > 0) {
+						updateCustomerData(selectCustomerData());
+					}else {
+						System.out.println("수정할 데이터가 선택되지 않았습니다.");
+					}
 					break;
 				case 'd':
 				case 'ㅇ':
 					System.out.println("데이터를 삭제합니다.");
+					if(count > 0) {   // 삭제하기 위해서 실제 데이터가 존재해야 삭제할 수 있음... 
+						deleteCustomerData(selectCustomerData());
+					}else {
+						System.out.println("삭제할 데이터가 선택되지 않았습니다.");
+					}
 					break;
 				case 'q':
 				case 'ㅂ':
@@ -89,6 +99,14 @@ public class CustomerManager2 {
 		int birthYear = scan.nextInt();
 		
 		Customer c1 = new Customer(name, gender, email, birthYear);
+		/*
+		 *  Customer c1 = new Customer();
+		 *  c1.setName(name);
+		 *  c1.setGener(gender);
+		 *  c1.setEmail(email);
+		 *  c1.setBirthYear(birthYear);
+		 * 
+		 */
 		cusList[count] = c1;
 		count++; 
 	}
@@ -108,14 +126,47 @@ public class CustomerManager2 {
 			System.out.println("출력, 수정 또는 삭제할 사람의 이름을 입력해 주세요  ");
 			String name = scan.next();
 			for (int i = 0; i < count; i++) {
-				if (cusList[i].getName().equals(name)) {
-					return cusList[i];
+				if (cusList[i].getName().equals(name)) {  // 현재 보고있는 객체의 이름과 입력 이름 비교
+					return cusList[i];   // 1) 함수(메서드)의 종료, 2) 반환값 처리
 				}
 			}
 			System.out.println("입력하신 이름을 가진 데이터가 없습니다.");
 		}
+		
+	}  // selectCustomerData End
+	
+	public static void updateCustomerData(Customer cus) {
+		
+		System.out.println("===== Update Customer Info =====");
+		System.out.print("이름("+cus.getName()+") :");
+		String name = scan.next();
+		cus.setName(name);
+//		cus.setName(scan.next());
+		System.out.print("성별("+cus.getGender()+") :");
+		cus.setGender(scan.next());
+		System.out.print("이메일("+cus.getEmail()+") :");
+		cus.setEmail(scan.next());
+		System.out.print("출생년도("+cus.getBirthYear()+") :");
+		cus.setBirthYear(scan.nextInt());
+		
+	}  // updateCustomerData End
+	
+	public static void deleteCustomerData(Customer cus) {
+		for (int i = 0; i < count; i++) {
+			// cus에 있는 name과 Customer 배열에 있는 객체들의 name들을 비교
+			if(cusList[i].getName().equals(cus.getName())) {  // cus와 객체배열에 있는 이름이 같은 것 찾기
+				// 삭제 처리
+				for (int j = i; j < count - 1 ; j++) {  // why? count -1 , 삭제로 data 줄었기 때문에
+					cusList[j] = cusList[j + 1];
+				}
+			}
+			System.out.println("데이터가 삭제 되었습니다.");
+			count --;  // count를 줄이면, 마지막 위치가 변경.... 
+		}
 	}
+	
 
+	
 	
 	
 	
