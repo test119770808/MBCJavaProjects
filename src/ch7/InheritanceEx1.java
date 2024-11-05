@@ -1,6 +1,7 @@
 package ch7;
 
 import ch7.obj.Employee;
+import ch7.obj.FinalClass;
 import ch7.obj.Person;
 import ch7.obj.Student;
 import ch7.obj.Teacher;
@@ -44,12 +45,45 @@ public class InheritanceEx1 {
 		emp.age = 18;
 		emp.height = 180.8;
 		emp.department = "교육부";
-		
-		
 		System.out.println(emp.info());
 		
+		te.name = "이황";
+		te.age = 47;
+		te.subject = "프로그래밍";
+		System.out.println(te.info());
+		
+		st.name = "이율곡";
+		st.age = 15;
+		st.studentId = "program001";
+		System.out.println(st.info());
+		
+		Student s1 = new Student("이율곡", 15, "program001");
+		System.out.println(s1.info());
+		System.out.println(s1);		// override한 결과 :  [이름 : 이율곡, 나이 : 15, 학번 : program001]
+		Teacher t1 = new Teacher("이황", 47);
+		System.out.println(t1.info());
+		System.out.println(t1);     // override 안함 : ch7.obj.Teacher@270421f5
+		
+		// 객체 비교... 
+		System.out.println("s1 - 이율곡, 15의 해쉬값 : " + s1.hashCode());
+		Student s2 = new Student("이율곡", 10, "program001");
+		System.out.println("s2 - 이율곡, 10의 해쉬값 : " + s2.hashCode());
+		Student s3 = new Student("이율곡", 15, "program0001");
+		s3.height = 180;
+		System.out.println("s3 - 이율곡, 15의 해쉬값 : " + s3.hashCode());
+		System.out.println("s1과 s3의 비교 결과 : " + (s1 == s3));
+		// 재정의한 equals를 통해서 비교
+		System.out.println("s1과 s3의 비교 결과 : " + s1.equals(s3));
+		
+		System.out.println(s1.getClass());
+		System.out.println(s2.getClass());
+		System.out.println(new Person().getClass());
 		
 
+		// final 메서드 확인
+		FinalClass finaltest = new FinalClass();
+		finaltest.method();  // 오버라이드는 안되지만, 부모에게 상속받은 메서드 사용은 가능함. 
+		
 	}
 
 }

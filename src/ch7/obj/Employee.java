@@ -16,6 +16,10 @@ public class Employee extends Person {
 		this.department = department;
 	}
 	
+	public void working() {
+		System.out.println(name +"이 일을 합니다.");
+	}
+	
 	@Override
 	public String info() {
 		// TODO Auto-generated method stub
