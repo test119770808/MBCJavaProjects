@@ -40,6 +40,8 @@ public class Student extends Person {
 		return "이름 : " + name + ", 나이 : " + age + ", 학번 : " + studentId;
 	}
 	
+	
+	// Object의 매서드를 재정의
 	@Override
 	public int hashCode() {
 		// 객체 동등비교를 위해서 사용하는 메서드, 재정의
