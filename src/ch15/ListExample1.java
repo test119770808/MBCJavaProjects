@@ -9,6 +9,8 @@ public class ListExample1 {
 	
 	// List : 1)순서가 있고, 2)중복이 허용되는 배열과 같은 자료구조
 	//       크기가 자동으로 조절되는 형태... 
+	//    만약에 수정, 삭제, 변경 사항이 많이 일어나는 경우에 적합하지는 않음.
+	// 변경 사항이 많이 일어나는 경우에는 Linked를 사용하면 좋아요. 
 	
 	public static void main(String[] args) {
 		// ArrayList의 기본 사용법
@@ -67,6 +69,9 @@ public class ListExample1 {
 		// clear : 리스트를 초기화
 		list.clear();
 		System.out.println(list);
+		
+		// isEmpty() : 리스트가 비어있는지 확인
+		System.out.println(list.isEmpty());  
 		
 	}
 
