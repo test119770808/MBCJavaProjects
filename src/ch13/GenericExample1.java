@@ -18,6 +18,12 @@ public class GenericExample1 {
 
 		// generic 지정 하지 않으면 타입은 Object로 지정(암묵적으로)
 		Box box3 = new Box();
+		box3.content = "안녕한가요?";
+		String hi = (String)box3.content;
+		box3.content = 100;
+		int value2 = (Integer)box3.content;
+		System.out.println(hi);
+		System.out.println(value2);
 	}
 
 }
