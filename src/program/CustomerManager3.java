@@ -1,43 +1,29 @@
 package program;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import program.obj.Customer;
 
-public class CustomerManager2 {
+public class CustomerManager3 {
+
+	// CustomerManger2(배열)를 참조하여 데이터의 타입을 Collection으로 변경해서 수정 작업을 진행!!!
 	// Customer라는 클래스를 불러와서 고객 정보를 저장하는 객체로 삼고 동작하는 고객관리 프로그램. 
 
 	// 멤버 변수 선언
-	static final int MAX = 100;
 	
-	// 고객 정보를 저장할 변수를 배열로 선언(이름, 성별, 이메일, 출생년도)
-	// Customer 클래스를 생성해서 객체 배열로 선언
-	static Customer[] cusList = new Customer[MAX]; 	// Customer 배열
-	
-	// 기존에 사용했던 index는 사용 안해도 됨... 객체 내에 고유 정보를 통한 검색을 이용할 예정.
-	
-	// count는 사용... 저장한 데이터의 크기.
-	static int count;
+	// 고객 정보를 저장할 변수를 Collection 타입으로 선언(이름, 성별, 이메일, 출생년도)
+	static List<Customer> cuslist = new ArrayList<>();
 	
 	// 기본 입력 장치로부터 데이터를 입력 받기 위해서 Scanner 객체를 생성
 	static Scanner scan = new Scanner(System.in);
 	
 	public static void main(String[] args) {
-		/*
-		// Customer 객체 테스트
-		Customer cus = new Customer();
-		cus.setName("홍길동");
-		cus.setGender("M");
-		cus.setEmail("hong@naver.com"); 
-		cus.setBirthYear(1390); 
-		
-		System.out.println(cus);
-		System.out.println("Customer 객체의 이름 : " + cus.getName());
-		*/
-		
+
 		// 메뉴 작성... 
 		while (true) {
-			System.out.printf("\n[Info] 고객 수 : %d \n", count);
+			System.out.printf("\n[Info] 고객 수 : %d \n", cuslist.size());
 			System.out.println("메뉴를 선택해 주세요 : ");
 			System.out.println("(I)nsert, (S)elect, (U)pdate, (D)elete, (Q)uit");
 			System.out.print("메뉴 입력 : ");
@@ -54,13 +40,13 @@ public class CustomerManager2 {
 				case 's':
 				case 'ㄴ':
 					System.out.println("고객 정보를 출력합니다.");
-					if(count > 0) printCustomerData(selectCustomerData());
+					if(cuslist.size() > 0) printCustomerData(selectCustomerData());
 					else System.out.println("출력할 데이터가 없습니다.");
 					break;
 				case 'u':
 				case 'ㅕ':
 					System.out.println("데이터를 수정합니다.");
-					if(count > 0) {
+					if(cuslist.size() > 0) {
 						updateCustomerData(selectCustomerData());
 					}else {
 						System.out.println("수정할 데이터가 선택되지 않았습니다.");
@@ -69,7 +55,7 @@ public class CustomerManager2 {
 				case 'd':
 				case 'ㅇ':
 					System.out.println("데이터를 삭제합니다.");
-					if(count > 0) {   // 삭제하기 위해서 실제 데이터가 존재해야 삭제할 수 있음... 
+					if(cuslist.size() > 0) {   // 삭제하기 위해서 실제 데이터가 존재해야 삭제할 수 있음... 
 						deleteCustomerData(selectCustomerData());
 					}else {
 						System.out.println("삭제할 데이터가 선택되지 않았습니다.");
@@ -107,15 +93,19 @@ public class CustomerManager2 {
 		 *  c1.setBirthYear(birthYear);
 		 * 
 		 */
-		cusList[count] = c1;
-		count++; 
+		cuslist.add(c1); 
 	}
 	
 	// 고객 정보 출력 메서드
 	public static void printCustomerData(Customer cus) {
-		System.out.println("=================== Customer Info =====================");
-		System.out.println(cus.toString());
-		System.out.println("=======================================================");
+		if (cus.getName() == null) {
+			System.out.println("메뉴로 돌아갑니다.");
+		}else {
+			System.out.println("=================== Customer Info =====================");
+			System.out.println(cus.toString());
+			System.out.println("=======================================================");
+		}
+		
 	}
 	
 	// 고객 정보 검색 메서드... selectCustomerData()
@@ -123,12 +113,17 @@ public class CustomerManager2 {
 	public static Customer selectCustomerData() {
 		// 고객 이름을 통해서 검색 작업... 
 		while(true) {
-			System.out.println("출력, 수정 또는 삭제할 사람의 이름을 입력해 주세요  ");
+			System.out.println("출력, 수정 또는 삭제할 사람의 이름을 입력해 주세요. ");
+			System.out.println("또는 메뉴로 돌아가고 싶은 경우에는 q를 눌러주세요. ");
 			String name = scan.next();
-			for (int i = 0; i < count; i++) {
-				if (cusList[i].getName().equals(name)) {  // 현재 보고있는 객체의 이름과 입력 이름 비교
-					return cusList[i];   // 1) 함수(메서드)의 종료, 2) 반환값 처리
+			for (int i = 0; i < cuslist.size(); i++) {
+				if (cuslist.get(i).getName().equals(name)) {  // 현재 보고있는 객체의 이름과 입력 이름 비교
+					return cuslist.get(i);   // 1) 함수(메서드)의 종료, 2) 반환값 처리
 				}
+			}
+			// while로 인한 무한 반복에서 나갈 수 있게 처리... 
+			if (name.equals("q") || name.equals("Q") || name.equals("ㅂ")) {
+				return new Customer(); // 빈 객체 넘기기.. 
 			}
 			System.out.println("입력하신 이름을 가진 데이터가 없습니다.");
 		}
@@ -136,33 +131,30 @@ public class CustomerManager2 {
 	}  // selectCustomerData End
 	
 	public static void updateCustomerData(Customer cus) {
-		
-		System.out.println("===== Update Customer Info =====");
-		System.out.print("이름("+cus.getName()+") :");
-		String name = scan.next();
-		cus.setName(name);
-//		cus.setName(scan.next());
-		System.out.print("성별("+cus.getGender()+") :");
-		cus.setGender(scan.next());
-		System.out.print("이메일("+cus.getEmail()+") :");
-		cus.setEmail(scan.next());
-		System.out.print("출생년도("+cus.getBirthYear()+") :");
-		cus.setBirthYear(scan.nextInt());
-		
+		if (cus.getName() == null) {
+			System.out.println("메뉴로 돌아갑니다.");
+		}else {
+			System.out.println("===== Update Customer Info =====");
+			System.out.print("이름("+cus.getName()+") :");
+			String name = scan.next();
+			cus.setName(name);
+//				cus.setName(scan.next());
+			System.out.print("성별("+cus.getGender()+") :");
+			cus.setGender(scan.next());
+			System.out.print("이메일("+cus.getEmail()+") :");
+			cus.setEmail(scan.next());
+			System.out.print("출생년도("+cus.getBirthYear()+") :");
+			cus.setBirthYear(scan.nextInt());
+		}
 	}  // updateCustomerData End
 	
 	public static void deleteCustomerData(Customer cus) {
-		for (int i = 0; i < count; i++) {
-			// cus에 있는 name과 Customer 배열에 있는 객체들의 name들을 비교
-			if(cusList[i].getName().equals(cus.getName())) {  // cus와 객체배열에 있는 이름이 같은 것 찾기
-				// 삭제 처리
-				for (int j = i; j < count - 1 ; j++) {  // why? count -1 , 삭제로 data 줄었기 때문에
-					cusList[j] = cusList[j + 1];
-				}
-			}
-			System.out.println("데이터가 삭제 되었습니다.");
-			count --;  // count를 줄이면, 마지막 위치가 변경.... 
+		if (cus.getName() == null) {
+			System.out.println("메뉴로 돌아갑니다.");
+		}else {
+			cuslist.remove(cus);
+			System.out.println("데이터가 삭제되었습니다.");
 		}
 	}
-	
+
 }
