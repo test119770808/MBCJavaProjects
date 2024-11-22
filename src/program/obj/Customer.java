@@ -1,6 +1,10 @@
 package program.obj;
 
-public class Customer {
+import java.io.Serializable;
+
+public class Customer implements Serializable{  // 직렬화  
+	
+	private static final long serialVersionUID = 1814984942127853970L;
 	
 	// 멤버변수(필드)
 	String name;
